@@ -1,0 +1,13 @@
+# docker-compose gebruiken wanneer deze data only docker volumes ondersteunt
+# version: "2"
+# services:
+#    edusoft-database:
+#    image: sadema/couchdb
+#    ports:
+#      - "5984:5984"
+#  medewerkerservice:
+#    image: sadema/medewerkerservice
+#    ports:
+#      - "8091:8080"
+#    depends_on:
+#      - edusoft-database

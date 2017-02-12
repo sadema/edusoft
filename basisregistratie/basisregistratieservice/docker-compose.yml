@@ -1,0 +1,12 @@
+version: "2"
+services:
+  database:
+    image: sadema/couchdb
+    ports:
+      - "5984:5984"
+  webservice:
+    image: sadema/onderwijsproductservice
+    ports:
+      - "8484:8080"
+    depends_on:
+      - database
