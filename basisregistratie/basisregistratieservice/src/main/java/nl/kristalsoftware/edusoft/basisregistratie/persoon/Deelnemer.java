@@ -5,15 +5,15 @@ package nl.kristalsoftware.edusoft.basisregistratie.persoon;
  */
 public class Deelnemer {
 
-    private String deelnemernummer;
+    private long deelnemernummer;
 
     private String registratiedatum;
 
-    public String getDeelnemernummer() {
+    public long getDeelnemernummer() {
         return deelnemernummer;
     }
 
-    public void setDeelnemernummer(String deelnemernummer) {
+    public void setDeelnemernummer(long deelnemernummer) {
         this.deelnemernummer = deelnemernummer;
     }
 

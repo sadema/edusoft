@@ -1,0 +1,12 @@
+{
+  "HostConfig": {
+    "PortBindings": {
+      "6666/tcp": [
+        {
+          "HostIp": "0.0.0.0",
+          "HostPort": "6666"
+        }
+      ]
+    }
+  }
+}

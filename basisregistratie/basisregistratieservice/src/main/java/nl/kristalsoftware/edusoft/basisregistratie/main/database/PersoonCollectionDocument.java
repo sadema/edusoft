@@ -14,7 +14,7 @@ import java.util.List;
  * Created by sjoerdadema on 14/02/2017.
  */
 @DatabaseQualifier("persoon")
-public class PersoonDatabaseDocument implements DatabaseDocument {
+public class PersoonCollectionDocument implements CollectionDocument {
 
     @Inject
     private Client client;
@@ -22,13 +22,13 @@ public class PersoonDatabaseDocument implements DatabaseDocument {
     @Inject
     private PersoonEntityFactory persoonEntityFactory;
 
-    @Override
-    public int create(int id, JsonObject jsonDocument, String databasename) {
-        int responseStatus = 500;
-        WebTarget target = client.target(SystemConfig.getCouchdbUrl() + databasename + "/" + String.valueOf(id));
-        Persoon persoon = persoonEntityFactory.create(jsonDocument);
-        return responseStatus;
-    }
+//    @Override
+//    public int create(int id, JsonObject jsonDocument, String databasename) {
+//        int responseStatus = 500;
+//        WebTarget target = client.target(SystemConfig.getCouchdbUrl() + databasename + "/" + String.valueOf(id));
+//        Persoon persoon = persoonEntityFactory.create(jsonDocument);
+//        return responseStatus;
+//    }
 
     @Override
     public int create(Long id, List<JsonObject> personDataList, String databasename) {

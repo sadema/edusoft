@@ -41,20 +41,23 @@ public class Database {
     }
 
     public boolean createDatabase(String dbName) {
-        boolean databaseCreated = false;
-        WebTarget target = client.target(couchdbUrl).path(dbName);
-        Response response = null;
-        try {
-            response = target.request().accept(MediaType.APPLICATION_JSON_TYPE).put(Entity.json(""));
-            if (response.getStatus() == Response.Status.CREATED.getStatusCode()) {
-                databaseCreated = true;
-            }
-        } finally {
-            if (response != null) {
-                response.close();
-            }
-        }
-        return databaseCreated;
+//        boolean databaseCreated = false;
+//        WebTarget target = client.target(couchdbUrl).path(dbName);
+//        System.out.println(target.getUri().toString());
+//        Response response = null;
+//        try {
+//            response = target.request().put(Entity.text(""));
+//            System.out.println("++++++++++" + response.getStatus());
+//            if (response.getStatus() == Response.Status.CREATED.getStatusCode()) {
+//                databaseCreated = true;
+//            }
+//        } finally {
+//            if (response != null) {
+//                response.close();
+//            }
+//        }
+//        return databaseCreated;
+        return true;
     }
 
 

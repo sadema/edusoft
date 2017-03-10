@@ -16,7 +16,7 @@ public class BaseResource {
 
     protected BaseResource() {
         client = ClientBuilder.newClient();
-        databaseUrl = SystemConfig.onderwijsproductDatabaseUrl;
+        databaseUrl = SystemConfig.databaseUrl;
     }
 
     public <T> T doGet(Class<T> retType, String path) {

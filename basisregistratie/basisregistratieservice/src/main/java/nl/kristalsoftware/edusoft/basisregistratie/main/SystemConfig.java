@@ -10,9 +10,9 @@ public class SystemConfig {
 
     private static SystemConfig instance = null;
 
-    public static final String onderwijsproductDatabaseUrl = createOnderwijsproductDatabaseUrl();
+//    public static final String onderwijsproductDatabaseUrl = createOnderwijsproductDatabaseUrl();
 
-    public static final String persoonDatabaseUrl = createPersoonDatabaseUrl();
+    public static final String databaseUrl = createDatabaseUrl();
 
     private Properties props;
 
@@ -38,22 +38,22 @@ public class SystemConfig {
         return getInstance().props.getProperty("couchdb_url");
     }
 
-    public static String getOnderwijsproductDatabasename() {
-        return getInstance().props.getProperty("onderwijsproduct_databasename");
+//    public static String getOnderwijsproductDatabasename() {
+//        return getInstance().props.getProperty("onderwijsproduct_databasename");
+//    }
+
+    public static String getDatabasename() {
+        return getInstance().props.getProperty("databasename");
     }
 
-    public static String getPersoonDatabasename() {
-        return getInstance().props.getProperty("persoon_databasename");
-    }
+//    private static String createOnderwijsproductDatabaseUrl() {
+//        String url = getCouchdbUrl() + getOnderwijsproductDatabasename();
+//        System.out.println("Url: " + url);
+//        return url;
+//    }
 
-    private static String createOnderwijsproductDatabaseUrl() {
-        String url = getCouchdbUrl() + getOnderwijsproductDatabasename();
-        System.out.println("Url: " + url);
-        return url;
-    }
-
-    private static String createPersoonDatabaseUrl() {
-        String url = getCouchdbUrl() + getPersoonDatabasename();
+    private static String createDatabaseUrl() {
+        String url = getCouchdbUrl() + getDatabasename();
         System.out.println("Url: " + url);
         return url;
     }

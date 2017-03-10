@@ -17,9 +17,9 @@ import java.util.Optional;
 /**
  * Created by sjoerdadema on 09/02/2017.
  */
-public interface DatabaseDocument {
+public interface CollectionDocument {
 
-    int create(int id, JsonObject jsonDocument, String databasename);
+//    int create(int id, JsonObject jsonDocument, String databasename);
 
     int create(Long id, List<JsonObject> personDataList, String databasename );
 }

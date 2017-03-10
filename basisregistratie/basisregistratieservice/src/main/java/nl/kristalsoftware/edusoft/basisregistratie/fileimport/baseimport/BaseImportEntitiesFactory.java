@@ -1,4 +1,4 @@
-package nl.kristalsoftware.edusoft.basisregistratie.fileimport;
+package nl.kristalsoftware.edusoft.basisregistratie.fileimport.baseimport;
 
 import javax.enterprise.inject.Instance;
 import javax.json.JsonObject;
@@ -17,7 +17,7 @@ public abstract class BaseImportEntitiesFactory<T> implements ImportEntitiesFact
     @Override
     public List<T> create(Instance<ImportEntitiesFactory<?>> factories, Stream<JsonObject> stream, Function<JsonObject,Long> keyFunc) {
         List<T> list = new ArrayList<>();
-        Map<Long,List<JsonObject>> dataMap = groupingBy(stream, keyFunc);
+        Map<Long,List<JsonObject>> dataMap = groupingByNumber(stream, keyFunc);
         dataMap.keySet().stream().forEach(key -> {
             list.add(create(factories, dataMap.get(key)));
         });
@@ -29,7 +29,7 @@ public abstract class BaseImportEntitiesFactory<T> implements ImportEntitiesFact
         return factories.select(qualifier).get();
     }
 
-    private Map<Long,List<JsonObject>> groupingBy(Stream<JsonObject> stream, Function<JsonObject,Long> key) {
+    private Map<Long,List<JsonObject>> groupingByNumber(Stream<JsonObject> stream, Function<JsonObject,Long> key) {
         return stream
                 .map(val -> (JsonObject) val)
                 .collect(Collectors.groupingBy(key));

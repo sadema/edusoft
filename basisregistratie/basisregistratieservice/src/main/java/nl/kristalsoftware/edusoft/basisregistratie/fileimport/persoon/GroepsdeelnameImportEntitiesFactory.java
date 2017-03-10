@@ -1,14 +1,15 @@
-package nl.kristalsoftware.edusoft.basisregistratie.fileimport;
+package nl.kristalsoftware.edusoft.basisregistratie.fileimport.persoon;
 
+import nl.kristalsoftware.edusoft.basisregistratie.fileimport.baseimport.BaseImportEntitiesFactory;
+import nl.kristalsoftware.edusoft.basisregistratie.fileimport.baseimport.ImportEntitiesFactory;
+import nl.kristalsoftware.edusoft.basisregistratie.fileimport.baseimport.ImportFactoryQualifier;
 import nl.kristalsoftware.edusoft.basisregistratie.main.JsonHelper;
-import nl.kristalsoftware.edusoft.basisregistratie.persoon.Deelnemer;
 import nl.kristalsoftware.edusoft.basisregistratie.persoon.Groepsdeelname;
 import nl.kristalsoftware.edusoft.basisregistratie.persoon.Opleidingsblad;
-import nl.kristalsoftware.edusoft.basisregistratie.persoon.Persoon;
 
-import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
+import javax.json.JsonNumber;
 import javax.json.JsonObject;
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +29,7 @@ public class GroepsdeelnameImportEntitiesFactory extends BaseImportEntitiesFacto
     public Groepsdeelname create(Instance<ImportEntitiesFactory<?>> factories, List<JsonObject> jsonDataList) {
         Groepsdeelname groepsdeelname = new Groepsdeelname();
         JsonObject groepsdeelnameJsonObject = jsonDataList.get(0);
-        setGroepsdeelname(groepsdeelname, jsonHelper.getStringFields(groepsdeelnameJsonObject, Arrays.asList("begindatum", "einddatum", "volgnummer")));
+        setGroepsdeelname(groepsdeelname, jsonHelper.getFields(groepsdeelnameJsonObject, Arrays.asList("begindatum", "einddatum", "volgnummer")));
         ImportEntitiesFactory opleidingsbladFactory =  getImportEntityFactory(factories, "opleidingsblad");
         List<Opleidingsblad> opleidingsbladList = opleidingsbladFactory.create(factories, jsonDataList.stream(), opleidingsbladKey);
         groepsdeelname.setOpleidingsbladList(opleidingsbladList);
@@ -39,10 +40,10 @@ public class GroepsdeelnameImportEntitiesFactory extends BaseImportEntitiesFacto
         return person.getJsonNumber("bladnummer").longValue();
     };
 
-    private Groepsdeelname setGroepsdeelname(Groepsdeelname groepsdeelname, Map<String,String> groepsdeelnameFieldMap) {
-        groepsdeelname.setBegindatum(groepsdeelnameFieldMap.get("begindatum"));
-        groepsdeelname.setEinddatum(groepsdeelnameFieldMap.get("einddatum"));
-        groepsdeelname.setVolgnummer(groepsdeelnameFieldMap.get("volgnummer"));
+    private Groepsdeelname setGroepsdeelname(Groepsdeelname groepsdeelname, Map<String,Object> groepsdeelnameFieldMap) {
+        groepsdeelname.setBegindatum((String) groepsdeelnameFieldMap.get("begindatum"));
+        groepsdeelname.setEinddatum((String) groepsdeelnameFieldMap.get("einddatum"));
+        groepsdeelname.setVolgnummer(((JsonNumber) groepsdeelnameFieldMap.get("volgnummer")).intValue());
         return groepsdeelname;
     }
 

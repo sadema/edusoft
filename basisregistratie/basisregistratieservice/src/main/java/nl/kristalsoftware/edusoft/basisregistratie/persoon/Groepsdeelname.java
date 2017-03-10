@@ -12,7 +12,7 @@ public class Groepsdeelname {
 
     private String einddatum = "";
 
-    private String volgnummer = "";
+    private int volgnummer = 0;
 
     private List<Opleidingsblad> opleidingsbladList = new ArrayList<>();
 
@@ -32,11 +32,11 @@ public class Groepsdeelname {
         this.einddatum = einddatum;
     }
 
-    public String getVolgnummer() {
+    public int getVolgnummer() {
         return volgnummer;
     }
 
-    public void setVolgnummer(String volgnummer) {
+    public void setVolgnummer(int volgnummer) {
         this.volgnummer = volgnummer;
     }
 

@@ -1,4 +1,4 @@
-package nl.kristalsoftware.edusoft.basisregistratie.fileimport;
+package nl.kristalsoftware.edusoft.basisregistratie.fileimport.baseimport;
 
 import javax.enterprise.inject.Instance;
 import javax.json.JsonObject;

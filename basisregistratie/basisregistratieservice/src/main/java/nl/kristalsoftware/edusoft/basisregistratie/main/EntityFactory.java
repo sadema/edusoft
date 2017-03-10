@@ -8,7 +8,7 @@ import java.util.List;
  */
 public interface EntityFactory<T> {
 
-    T create(JsonObject jsonDocument);
+//    T create(JsonObject jsonDocument);
 
     T create(List<JsonObject> jsonDataList);
 

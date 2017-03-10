@@ -5,7 +5,7 @@ package nl.kristalsoftware.edusoft.basisregistratie.persoon;
  */
 public class Opleidingsblad {
 
-    private String bladnummer = "";
+    private int bladnummer = 0;
 
     private String opleiding = "";
 
@@ -15,11 +15,11 @@ public class Opleidingsblad {
 
     private String groepsnaam = "";
 
-    public String getBladnummer() {
+    public int getBladnummer() {
         return bladnummer;
     }
 
-    public void setBladnummer(String bladnummer) {
+    public void setBladnummer(int bladnummer) {
         this.bladnummer = bladnummer;
     }
 

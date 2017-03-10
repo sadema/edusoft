@@ -7,15 +7,15 @@ import nl.kristalsoftware.edusoft.basisregistratie.onderwijsproduct.Onderwijspro
 import javax.inject.Inject;
 import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  * Created by sjoerdadema on 14/02/2017.
  */
 @DatabaseQualifier("onderwijsproduct")
-public class OnderwijsproductDatabaseDocument extends BaseDatabaseDocument<Onderwijsproduct> implements DatabaseDocument {
+public class OnderwijsproductCollectionDocument extends BaseDatabaseDocument<Onderwijsproduct> implements CollectionDocument {
 
     @Inject
     private Client client;
@@ -34,6 +34,11 @@ public class OnderwijsproductDatabaseDocument extends BaseDatabaseDocument<Onder
             System.out.println("ERROR: Could not create document with id: " + id);
         }
         return responseStatus;
+    }
+
+    @Override
+    public int create(Long id, List<JsonObject> personDataList, String databasename) {
+        return 0;
     }
 
 }

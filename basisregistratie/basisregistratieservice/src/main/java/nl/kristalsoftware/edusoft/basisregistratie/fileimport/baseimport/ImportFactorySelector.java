@@ -1,6 +1,4 @@
-package nl.kristalsoftware.edusoft.basisregistratie.fileimport;
-
-import nl.kristalsoftware.edusoft.basisregistratie.main.database.DatabaseQualifier;
+package nl.kristalsoftware.edusoft.basisregistratie.fileimport.baseimport;
 
 import javax.enterprise.util.AnnotationLiteral;
 

@@ -1,10 +1,9 @@
 package nl.kristalsoftware.edusoft.basisregistratie.fileimport.data;
 
-import nl.kristalsoftware.edusoft.basisregistratie.fileimport.BaseImportEntitiesFactory;
-import nl.kristalsoftware.edusoft.basisregistratie.fileimport.ImportEntitiesFactory;
-import nl.kristalsoftware.edusoft.basisregistratie.fileimport.ImportFactorySelector;
+import nl.kristalsoftware.edusoft.basisregistratie.fileimport.baseimport.ImportEntitiesFactory;
+import nl.kristalsoftware.edusoft.basisregistratie.fileimport.baseimport.ImportFactorySelector;
 import nl.kristalsoftware.edusoft.basisregistratie.main.database.Database;
-import nl.kristalsoftware.edusoft.basisregistratie.main.database.DatabaseDocument;
+import nl.kristalsoftware.edusoft.basisregistratie.main.database.CollectionDocument;
 import nl.kristalsoftware.edusoft.basisregistratie.main.database.DatabaseSelector;
 import nl.kristalsoftware.edusoft.basisregistratie.persoon.Persoon;
 
@@ -16,9 +15,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.net.URL;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * Created by sjoerdadema on 09/02/2017.
@@ -33,7 +30,7 @@ public class DataImportService {
 
     @Inject
     @Any
-    private Instance<DatabaseDocument> databaseDocuments;
+    private Instance<CollectionDocument> collectionDocuments;
 
     @Inject
     @Any
@@ -54,13 +51,9 @@ public class DataImportService {
         return data;
     }
 
-    Function<JsonObject,Long> personKey = person -> {
-        return person.getJsonNumber("id").longValue();
-    };
-
-    private DatabaseDocument getDatabaseDocument(String databasename) {
-        DatabaseSelector qualifier = new DatabaseSelector(databasename);
-        return databaseDocuments.select(qualifier).get();
+    private CollectionDocument getCollectionDocument(String collectionName) {
+        DatabaseSelector qualifier = new DatabaseSelector(collectionName);
+        return collectionDocuments.select(qualifier).get();
     }
 
     private ImportEntitiesFactory getImportEntityFactory(String collectionName) {
@@ -68,17 +61,23 @@ public class DataImportService {
         return factories.select(qualifier).get();
     }
 
-    public void processData(String databasename, String data) {
-        JsonReader jsonReader = Json.createReader(new StringReader(data));
-        JsonArray personArray = jsonReader.readObject().getJsonArray("items");
+    public JsonArray getJsonArrayFromData(String jsonData, String elementName) {
+        JsonReader jsonReader = Json.createReader(new StringReader(jsonData));
+        JsonArray jsonArray = jsonReader.readObject().getJsonArray(elementName);
         jsonReader.close();
-        ImportEntitiesFactory<Persoon> entityFactory = getImportEntityFactory(databasename);
-        List<Persoon> persoon = entityFactory.create(factories, personArray.stream().map(val -> (JsonObject) val), personKey);
+        return jsonArray;
+    }
 
+    public void processJsonData(String databasename, JsonArray jsonArray, String documentCollectionName, Function<JsonObject,Long> key) {
+        ImportEntitiesFactory<Persoon> entityFactory = getImportEntityFactory(documentCollectionName);
+        List<Persoon> persoon = entityFactory.create(factories, jsonArray.stream().map(val -> (JsonObject) val), key);
+        persoon.stream().forEach(p -> {
+            System.out.println(p.getAchternaam() + " " + p.getDeelnemer().getDeelnemernummer());
+        });
 //        Map<Long,List<JsonObject>> personMap = onderwijsproductArray.stream()
 //                .map(val -> (JsonObject) val)
 //                .collect(Collectors.groupingBy(personKey));
-//        DatabaseDocument databaseDocument = getDatabaseDocument(databasename);
+//        CollectionDocument databaseDocument = getCollectionDocument(databasename);
 //        personMap.keySet().stream().forEach(personKey -> {
 //            databaseDocument.create(personKey, personMap.get(personKey), databasename);
 //        });

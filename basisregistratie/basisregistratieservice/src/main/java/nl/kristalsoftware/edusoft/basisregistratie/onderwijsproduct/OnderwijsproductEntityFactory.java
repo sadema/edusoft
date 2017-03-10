@@ -3,6 +3,7 @@ package nl.kristalsoftware.edusoft.basisregistratie.onderwijsproduct;
 import nl.kristalsoftware.edusoft.basisregistratie.main.EntityFactory;
 
 import javax.json.JsonObject;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -18,5 +19,10 @@ public class OnderwijsproductEntityFactory implements EntityFactory<Onderwijspro
         }
         onderwijsproduct.setTitel(jsonDocument.getString("titel"));
         return onderwijsproduct;
+    }
+
+    @Override
+    public Onderwijsproduct create(List<JsonObject> jsonDataList) {
+        return null;
     }
 }

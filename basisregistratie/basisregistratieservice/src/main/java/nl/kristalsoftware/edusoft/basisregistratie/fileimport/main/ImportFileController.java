@@ -1,4 +1,4 @@
-package nl.kristalsoftware.edusoft.basisregistratie.fileimport;
+package nl.kristalsoftware.edusoft.basisregistratie.fileimport.main;
 
 import nl.kristalsoftware.edusoft.basisregistratie.fileimport.data.DataHelper;
 import nl.kristalsoftware.edusoft.basisregistratie.fileimport.data.DataImportException;
@@ -7,13 +7,15 @@ import nl.kristalsoftware.edusoft.basisregistratie.main.database.Database;
 
 import javax.inject.Inject;
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 import java.io.IOException;
+import java.util.function.Function;
 
 /**
  * Created by sjoerdadema on 14/02/2017.
  */
-public class ImportFileProcessor {
+public class ImportFileController {
 
     @Inject
     private DataHelper importData;
@@ -24,10 +26,10 @@ public class ImportFileProcessor {
     @Inject
     private Database database;
 
-    public JsonObject process(String filename, String databasename) {
+    public JsonObject process(String filename, String databasename, String documentCollectionName, Function<JsonObject,Long> key) {
         JsonObject processStatus = Json.createObjectBuilder().add("status", "ok").build();
         try {
-            String data = dataImportService.getDataFromFile(filename);
+            String jsonData = dataImportService.getDataFromFile(filename);
             if (database.databaseExists(databasename)) {
                 throw new DataImportException(databasename + " exists");
             }
@@ -36,7 +38,8 @@ public class ImportFileProcessor {
                     throw new DataImportException("cannot create " + databasename);
                 }
             }
-            dataImportService.processData(databasename, data);
+            JsonArray jsonArray = dataImportService.getJsonArrayFromData(jsonData, "items");
+            dataImportService.processJsonData(databasename, jsonArray, documentCollectionName, key);
         } catch (IOException e) {
             processStatus = Json.createObjectBuilder().add("error", e.getMessage()).build();
         } catch (DataImportException e) {

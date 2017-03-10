@@ -1,4 +1,4 @@
-package nl.kristalsoftware.edusoft.basisregistratie.fileimport;
+package nl.kristalsoftware.edusoft.basisregistratie.fileimport.baseimport;
 
 import javax.inject.Qualifier;
 import java.lang.annotation.Retention;
